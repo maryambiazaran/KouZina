@@ -11,9 +11,14 @@
 <body>
 <nav th:fragment="navigation">
     <a href="/">Home</a> |
-    <a href="/recipes">Recipe Book</a> |
-    <a href="/pantry">My Pantry</a>
+    <a href="/recipe">Recipe Book</a> |
+    <a href="/ingredients">My Pantry</a>
+    <hr/>
 </nav>
+
+<div th:fragment="testBody">
+    <p th:text="${testText}">Default Text</p>
+</div>
 
 </body>
 </html>
