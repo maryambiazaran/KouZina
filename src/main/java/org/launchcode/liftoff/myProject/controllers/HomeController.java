@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("")
 public class HomeController {
 
+
     @RequestMapping(value="")
     public String index(Model model) {
         model.addAttribute("title", "Welcome to my App!");
