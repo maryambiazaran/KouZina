@@ -12,24 +12,26 @@
 
 <a href="/ingredients/add" >Add Ingredient</a>
 
-<table class="table">
 
-    <tr>
-        <th>id</th>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Category</th>
+<div  th:each="category : ${categories}">
+    <div class="table-responsive-sm" th:if="${category.getIngredients().size()}">
+        <h2 th:text="${category.name}"></h2>
+        <table  class="table">
+            <thead>
+                <tr class="active" >
+                    <th class="col-sm-3" >Name</th>
+                    <th class="col-sm-3">Quantity</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr  th:each="ingredient : ${category.getIngredients()}">
+                    <td  th:text="${ingredient.name}"></td>
+                    <td  th:text="${ingredient.inventory}"></td>
+                </tr>
+            </tbody>
 
-    </tr>
-
-    <tr th:each="ingredient : ${ingredients}">
-        <td th:text="${ingredient.id}"></td>
-        <td th:text="${ingredient.name}"></td>
-        <td th:text="${ingredient.inventory}"></td>
-        <td ><a th:text="${ingredient.category.name}" th:href="|/ingredient/category/${ingredient.category.id}|"></a></td>
-    </tr>
-
-</table>
-
+        </table>
+    </div>
+</div>
 </body>
 </html>

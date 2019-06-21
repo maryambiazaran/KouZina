@@ -29,6 +29,7 @@ public class IngredientCategory {
         this.name = name;
     }
 
+
     public int getId() {
         return id;
     }
@@ -39,5 +40,13 @@ public class IngredientCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

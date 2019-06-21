@@ -29,6 +29,7 @@ public class IngredientController {
     public String displayIngredients(Model model) {
         model.addAttribute("title", "Ingredients");
         model.addAttribute("ingredients", ingredientDao.findAll());
+        model.addAttribute("categories", ingredientCategoryDao.findAll());
 
         return "ingredients/index";
     }
