@@ -85,5 +85,6 @@ public class Recipe {
 
     public void setRecipeIngredients(Set<RecipeIngredient> recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
+
     }
 }

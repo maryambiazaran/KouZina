@@ -12,24 +12,28 @@
 
 <a href="/recipe/add" > Add Recipe </a>
 
-<table class="table">
+<div  th:each="category : ${categories}">
+    <div class="table-responsive-sm" th:if="${category.getRecipes().size()}">
+        <h3 th:text="${category.name}"></h3>
+        <table  class="table">
+            <thead>
+            <tr class="active" >
+                <th class="col-sm-3" >Name</th>
+                <th class="col-sm-3">Servings</th>
+                <th class="col-sm-3"># of Ingredients</th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr  th:each="recipe : ${category.getRecipes()}">
+                <td  th:text="${recipe.name}"></td>
+                <td  th:text="${recipe.servingSize}"></td>
+                <td  th:text="${recipe.getRecipeIngredients().size()}"></td>
+            </tr>
+            </tbody>
 
-    <tr>
-        <th>id</th>
-        <th>Name</th>
-        <th># of Ingredients</th>
-        <th>Category</th>
-
-    </tr>
-
-    <tr th:each="recipe : ${recipes}">
-        <td th:text="${recipe.id}"></td>
-        <td th:text="${recipe.name}"></td>
-        <td th:text="${recipe.recipeIngredients.size()}"></td>
-        <td ><a th:text="${recipe.category.name}" th:href="|/recipe/category/${recipe.category.id}|"></a></td>
-    </tr>
-
-</table>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>
