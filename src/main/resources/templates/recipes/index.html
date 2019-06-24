@@ -4,13 +4,19 @@
 
 <body class="container">
 
-<h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${title}">Default Title</h1>
+
+<div>
+    <nav>
+        <a class="btn btn-primary" role="button" href="/recipe/add" >New Recipe</a>
+        <a class="btn btn-primary" role="button" href="/recipe/category" > Recipe Categories </a>
+    </nav><br/>
+</div>
 
 <p th:unless="${recipes} and ${recipes.size()}"> No recipes :(</p>
 
-<a href="/recipe/add" > Add Recipe </a>
 
 <div  th:each="category : ${categories}">
     <div class="table-responsive-sm" th:if="${category.getRecipes().size()}">
@@ -34,6 +40,7 @@
         </table>
     </div>
 </div>
+<div th:replace="fragments :: cssjs"></div>
 
 </body>
 </html>

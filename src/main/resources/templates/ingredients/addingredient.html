@@ -4,11 +4,10 @@
 
 <body class="container">
 
-<h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${title}">Default Title</h1>
 
-<a href="/ingredients/category/add" >Add Ingredient Category</a>
 
 <form method="post" style="max-width:600px;" th:object="${ingredient}">
     <div class="form-group">
@@ -34,6 +33,7 @@
     <input type="submit" value="Add Ingredient" />
 </form>
 
+<div th:replace="fragments :: cssjs"></div>
 
 </body>
 </html>

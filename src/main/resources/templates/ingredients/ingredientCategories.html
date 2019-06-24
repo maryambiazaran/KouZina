@@ -4,13 +4,15 @@
 
 <body class="container">
 
-<h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${title}">Default Title</h1>
+
 
 <p th:unless="${categories} and ${categories.size()}">no categories :(</p>
 
-<a href="/ingredients/category/add" >Add Ingredient Category</a>
+<a class="btn btn-primary" role="button" href="/ingredients/category/add" >New Category</a>
+<br/><br/>
 
 <table class="table">
 
@@ -27,6 +29,7 @@
     </tr>
 
 </table>
+<div th:replace="fragments :: cssjs"></div>
 
 </body>
 </html>

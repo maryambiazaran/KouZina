@@ -61,7 +61,7 @@ public class IngredientController {
 
     @RequestMapping(value="category")
     public String displayCategories(Model model) {
-        model.addAttribute("title", "Ingredient Categories");
+        model.addAttribute("title", "Categories");
         model.addAttribute("categories", ingredientCategoryDao.findAll());
 
         return "ingredients/ingredientCategories";
@@ -70,7 +70,7 @@ public class IngredientController {
 
     @RequestMapping(value="category/add", method = RequestMethod.GET)
     public String displayAddIngredientCategoryForm(Model model) {
-        model.addAttribute("title", "Add Ingredient Category");
+        model.addAttribute("title", "New Category");
         model.addAttribute(new IngredientCategory());
 
         return "ingredients/addcategory";
