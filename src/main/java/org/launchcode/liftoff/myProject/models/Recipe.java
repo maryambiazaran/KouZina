@@ -7,18 +7,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Data
 
 @Entity
 public class Recipe {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @NotNull
     @Column(name = "name")
@@ -35,6 +35,8 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<RecipeIngredient> recipeIngredients;
 
+    // =========== CONSTRUCTOR =============
+
     public Recipe(){}
 
     public Recipe(String name) {
@@ -42,8 +44,15 @@ public class Recipe {
 
     }
 
-    public int getId() {
+    // =========== GETTER & SETTER =============
+
+
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -84,5 +93,22 @@ public class Recipe {
 
     public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
+    }
+
+
+// =========== EQUALS & HASHCODE =============
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return id !=null && id == recipe.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

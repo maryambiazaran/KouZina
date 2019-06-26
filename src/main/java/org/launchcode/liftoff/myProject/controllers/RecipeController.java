@@ -140,7 +140,7 @@ public class RecipeController {
         Recipe recipe = recipeDao.findOne(form.getRecipeId());
         Ingredient ingredient = ingredientDao.findOne(form.getIngredientId());
         Double quantity = form.getQuantity();
-        RecipeIngredient newrecipeIngredient = new RecipeIngredient(ingredient, quantity);
+        RecipeIngredient newrecipeIngredient = new RecipeIngredient(recipe, ingredient, quantity);
         recipe.getRecipeIngredients().add(newrecipeIngredient);
         recipeDao.save(recipe);
         return "redirect:view/"+recipe.getId();

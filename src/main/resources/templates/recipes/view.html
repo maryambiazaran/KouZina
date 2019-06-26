@@ -65,7 +65,7 @@
             <tbody >
                 <tr  th:each="item : ${recipe.recipeIngredients}">
                     <td  th:text="${item.id}"></td>
-                    <td  th:text="${item.name}"></td>
+                    <td  th:text="${item.getIngredient().getName()}"></td>
                     <td  th:text="${item.quantity}"></td>
                 </tr>
             </tbody>
