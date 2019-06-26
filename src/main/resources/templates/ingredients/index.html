@@ -27,20 +27,16 @@
                 <tr class="active" >
                     <th class="col-sm-5" >Name</th>
                     <th class="col-sm-5">Quantity</th>
-                    <th class="col-sm-2">
 
-                    </th>
                 </tr>
             </thead>
             <tbody >
                 <tr  th:each="ingredient : ${category.getIngredients()}">
-                    <td  th:text="${ingredient.name}"></td>
-                    <td  th:text="${ingredient.inventory}"></td>
-                    <td>
-
-                            <a class="btn btn-primary" role="button" th:href="'/ingredients/edit/'+${ingredient.id}" >Edit</a>
-
+                    <td >
+                        <a th:text="${ingredient.name}" th:href="'/ingredients/edit/'+${ingredient.id}"></a>
                     </td>
+                    <td  th:text="${ingredient.inventory}"></td>
+
                 </tr>
             </tbody>
 

@@ -96,7 +96,21 @@ public class IngredientController {
         return "ingredients/editIngredient";
     }
 
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm(Model model,
+                                  @Valid Ingredient ingredient,
+                                  Errors errors,
+                                  int categoryId) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Ingredient");
+            return "ingredients";
+        }
 
+        IngredientCategory ingcat = ingredientCategoryDao.findOne(categoryId);
+        ingredient.setCategory(ingcat);
+        ingredientDao.save(ingredient);
+        return "redirect:";
+    }
 
 
 }

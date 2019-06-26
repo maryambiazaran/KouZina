@@ -9,7 +9,7 @@
 <h1 th:text="${title}">Default Title</h1>
 
 
-<form method="post" style="max-width:600px;" th:object="${ingredient}">
+<form method="post" action="/ingredients/edit" style="max-width:600px;" th:object="${ingredient}">
     <div class="form-group">
         <label th:for="name">Name</label>
         <input class="form-control" th:field="*{name}" th:value="*{name}" />
@@ -31,6 +31,7 @@
             </option>
         </select>
     </div>
+    <input type="hidden" th:value="*{id}" th:field="*{id}"/>
 
     <input type="submit" value="Save" />
 </form>
