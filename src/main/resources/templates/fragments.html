@@ -3,15 +3,14 @@
 <head th:fragment="head">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <!--
-    <title th:text="${title}">My Food Inventory Project</title>
-    -->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 </head>
 <body>
 
-<nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+<nav th:fragment="navigation" class="navbar navbar-expand-md navbar-light bg-light">
     <a class="navbar-brand" href="/">KouZina</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -28,44 +27,14 @@
                 <a class="nav-link" href="/recipe">Cookbook <span class="sr-only">(current)</span></a>
             </li>
 
-<!--
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="/ingredients" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Pantry
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                    <a class="dropdown-item" href="/ingredients">Ingredients</a>
-                    <a class="dropdown-item" href="/ingredients/category">Categories</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="/recipe" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Cookbook
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/recipe">Recipes</a>
-                    <a class="dropdown-item" href="/recipe/category">Categories</a>
-
-                </div>
-            </li>
-            -->
         </ul>
     </div>
 </nav>
 
 
-<!--
-<nav th:fragment="navigation">
-    <a href="/">Home</a> |
-    <a href="/ingredients">Pantry</a> |
-    <a href="/recipe">Cookbook</a>
-    <hr/>
-</nav>
--->
 
-<div th:fragment="testBody">
-    <p th:text="${testText}">Default Text</p>
-</div>
+
+
 
 <div th:fragment="cssjs">
     <script

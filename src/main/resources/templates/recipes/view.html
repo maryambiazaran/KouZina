@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+
+<nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${title}">Default Title</h1>
+
+
+
+<form method="post" action="/recipe/view" style="max-width:600px;" th:object="${recipe}">
+
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}" th:value="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="description">Description</label>
+        <input class="form-control" th:field="*{description}" th:value="*{description}"  />
+        <span th:errors="*{description}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="servingSize">Number of Servings</label>
+        <input class="form-control" th:field="*{servingSize}" th:value="*{servingSize}" />
+        <span th:errors="*{servingSize}" class="error"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label th:for="type">Type</label>
+        <select name="categoryId">
+            <option th:each="category : ${categories}"
+                    th:text="${category.name}"
+                    th:value="${category.id}"
+                    th:selected="${recipe.category.id == category.id}"></option>
+        </select>
+    </div>
+    <input type="hidden" th:value="*{id}" name="recipeId" />
+
+
+    <input type="submit" value="Save" />
+</form>
+<br/>
+<a class="btn btn-primary" role="button" th:href="'/recipe/addingredient/'+${recipe.id}" >Add Ingredient</a>
+
+<!-- ====================================== -->
+<p th:unless="${recipe.recipeIngredients} and ${recipe.recipeIngredients.size()}"> No Ingredients! :(</p>
+
+<div th:if="${recipe.recipeIngredients} and ${recipe.recipeIngredients.size()}">
+    <h3 >Ingredients:</h3>
+    <div class="table-responsive-sm">
+        <table  class="table table-hover">
+            <thead>
+                <tr class="active" >
+                    <th class="col-sm-3" >id</th>
+                    <th class="col-sm-3">Name</th>
+                    <th class="col-sm-3">Quantity</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr  th:each="item : ${recipe.recipeIngredients}">
+                    <td  th:text="${item.id}"></td>
+                    <td  th:text="${item.name}"></td>
+                    <td  th:text="${item.quantity}"></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+
+<div th:replace="fragments :: cssjs"></div>
+
+
+</body>
+</html>

@@ -18,10 +18,11 @@
     </nav><br/>
 </div>
 
-<div  th:each="category : ${categories}">
-    <div class="table-responsive-sm" th:if="${category.getIngredients().size()}">
+<div class="container" th:each="category : ${categories}">
+
+    <div  th:if="${category.getIngredients().size()}">
         <h3 th:text="${category.name}"></h3>
-        <table  class="table">
+        <table  class="table table-hover">
             <thead>
                 <tr class="active" >
                     <th class="col-sm-3" >Name</th>

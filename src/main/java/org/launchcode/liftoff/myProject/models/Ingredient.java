@@ -1,9 +1,10 @@
 package org.launchcode.liftoff.myProject.models;
-
+//PUBLISHER
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ import lombok.Data;
 public class Ingredient {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
@@ -28,7 +29,7 @@ public class Ingredient {
     private IngredientCategory category;
 
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
-    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
+    private List<RecipeIngredient> recipeIngredients;
 
    public Ingredient(){}
 
@@ -80,11 +81,11 @@ public class Ingredient {
         this.inventory = inventory;
     }
 
-    public Set<RecipeIngredient> getRecipeIngredients() {
+    public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }
 
-    public void setRecipeIngredients(Set<RecipeIngredient> recipeIngredients) {
+    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
     }
 }

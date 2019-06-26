@@ -1,11 +1,12 @@
 package org.launchcode.liftoff.myProject.models;
-
+//BOOK
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,14 +33,12 @@ public class Recipe {
     private int servingSize;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private Set<RecipeIngredient> recipeIngredients;
+    private List<RecipeIngredient> recipeIngredients;
 
     public Recipe(){}
 
-    public Recipe(String name, RecipeIngredient... recipeIngredients) {
+    public Recipe(String name) {
         this.name = name;
-        for (RecipeIngredient recipeIngredient: recipeIngredients) recipeIngredient.setRecipe(this);
-        this.recipeIngredients = Stream.of(recipeIngredients).collect(Collectors.toSet());
 
     }
 
@@ -79,12 +78,11 @@ public class Recipe {
         this.servingSize = servingSize;
     }
 
-    public Set<RecipeIngredient> getRecipeIngredients() {
+    public List<RecipeIngredient> getRecipeIngredients() {
         return recipeIngredients;
     }
 
-    public void setRecipeIngredients(Set<RecipeIngredient> recipeIngredients) {
+    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
-
     }
 }

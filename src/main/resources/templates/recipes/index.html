@@ -21,7 +21,7 @@
 <div  th:each="category : ${categories}">
     <div class="table-responsive-sm" th:if="${category.getRecipes().size()}">
         <h3 th:text="${category.name}"></h3>
-        <table  class="table">
+        <table  class="table table-hover">
             <thead>
             <tr class="active" >
                 <th class="col-sm-3" >Name</th>
@@ -31,9 +31,12 @@
             </thead>
             <tbody >
             <tr  th:each="recipe : ${category.getRecipes()}">
-                <td  th:text="${recipe.name}"></td>
+                <td >
+                    <a th:text="${recipe.name}" th:href="'/recipe/view/'+${recipe.id}"> </a>
+                </td>
                 <td  th:text="${recipe.servingSize}"></td>
                 <td  th:text="${recipe.getRecipeIngredients().size()}"></td>
+
             </tr>
             </tbody>
 

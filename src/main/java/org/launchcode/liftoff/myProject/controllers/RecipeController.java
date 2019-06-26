@@ -1,17 +1,20 @@
 package org.launchcode.liftoff.myProject.controllers;
 
-import org.launchcode.liftoff.myProject.models.Recipe;
-import org.launchcode.liftoff.myProject.models.RecipeCategory;
+import org.launchcode.liftoff.myProject.models.*;
+import org.launchcode.liftoff.myProject.models.data.IngredientDao;
 import org.launchcode.liftoff.myProject.models.data.RecipeCategoryDao;
 import org.launchcode.liftoff.myProject.models.data.RecipeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("recipe")
@@ -22,6 +25,9 @@ public class RecipeController {
 
     @Autowired
     private RecipeCategoryDao recipeCategoryDao;
+
+    @Autowired
+    private IngredientDao ingredientDao;
 
 
     @RequestMapping("")
@@ -85,5 +91,59 @@ public class RecipeController {
         return "redirect:";
     }
 
+    @RequestMapping(value="view/{recipeId}", method=RequestMethod.GET)
+    public String viewRecipe(Model model, @PathVariable int recipeId) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        model.addAttribute("recipe", theRecipe);
+        model.addAttribute("title", theRecipe.getName());
+        model.addAttribute("categories", recipeCategoryDao.findAll());
+        return "recipes/view";
+    }
+
+    @RequestMapping(value="view", method=RequestMethod.POST)
+    public String processViewRecipe(Model model,
+                                    String name,
+                                    int recipeId,
+                                    int categoryId,
+                                    int servingSize,
+                                    String description) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        theRecipe.setName(name);
+        theRecipe.setDescription(description);
+        theRecipe.setServingSize(servingSize);
+        theRecipe.setCategory(recipeCategoryDao.findOne(categoryId));
+        recipeDao.save(theRecipe);
+        return "redirect:";
+    }
+
+    @RequestMapping(value="addingredient/{recipeId}", method=RequestMethod.GET)
+    public String viewAddRecipeIngredientForm(Model model,
+                                    @PathVariable int recipeId) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        Iterable<Ingredient> ingredients =  ingredientDao.findAll();
+        model.addAttribute("form", new AddRecipeIngredientForm(theRecipe,ingredients));
+        model.addAttribute("title", theRecipe.getName());
+        return "recipes/addIngredient";
+    }
+
+    @RequestMapping(value="addingredient", method=RequestMethod.POST)
+    //@ResponseBody
+    public String processAddRecipeIngredientForm(Model model,
+                                                 @Valid AddRecipeIngredientForm form,
+                                                 Errors errors ) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Ingredients");
+            return "recipes/view";
+        }
+
+        Recipe recipe = recipeDao.findOne(form.getRecipeId());
+        Ingredient ingredient = ingredientDao.findOne(form.getIngredientId());
+        Double quantity = form.getQuantity();
+        RecipeIngredient newrecipeIngredient = new RecipeIngredient(ingredient, quantity);
+        recipe.getRecipeIngredients().add(newrecipeIngredient);
+        recipeDao.save(recipe);
+        return "redirect:view/"+recipe.getId();
+    }
 
 }
