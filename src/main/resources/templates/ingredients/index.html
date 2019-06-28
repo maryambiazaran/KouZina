@@ -27,6 +27,7 @@
                 <tr class="active" >
                     <th class="col-sm-5" >Name</th>
                     <th class="col-sm-5">Quantity</th>
+                    <th></th>
 
                 </tr>
             </thead>
@@ -36,6 +37,11 @@
                         <a th:text="${ingredient.name}" th:href="'/ingredients/edit/'+${ingredient.id}"></a>
                     </td>
                     <td  th:text="${ingredient.inventory}"></td>
+                    <td>
+                        <form method = "post" >
+
+                        </form>
+                    </td>
 
                 </tr>
             </tbody>

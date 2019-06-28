@@ -46,8 +46,7 @@
     <input type="submit" value="Save" />
 </form>
 <br/>
-<a class="btn btn-primary" role="button" th:href="'/recipe/addingredient/'+${recipe.id}" >Add Ingredient</a>
-<br/><br/>
+<br/>
 <!-- ====================================== -->
 <p th:unless="${recipe.recipeIngredients} and ${recipe.recipeIngredients.size()}"> No Ingredients! :(</p>
 
@@ -57,18 +56,26 @@
         <table  class="table table-hover">
             <thead>
                 <tr class="active" >
-                    <th class="col-sm-3" >id</th>
-                    <th class="col-sm-3">Name</th>
-                    <th class="col-sm-3">Quantity</th>
+                    <th class="col-sm-2">Name</th>
+                    <th class="col-sm-1">Quantity</th>
+                    <th class="col-sm-2"></th>
                 </tr>
             </thead>
             <tbody >
                 <tr  th:each="item : ${recipe.recipeIngredients}">
-                    <td  th:text="${item.id}"></td>
                     <td>
                         <a  th:text="${item.getIngredient().getName()}" th:href="'/recipe/edit/'+${recipeId}+'/'+${item.getIngredient().getId()}"></a>
                     </td>
                     <td  th:text="${item.quantity}"></td>
+                    <td>
+                        <span>
+                            <form method="post" action="/recipe/delete" th:object="${form}">
+                                <input type="hidden" name="recipeId" th:value="${recipeId}"  />
+                                <input type="hidden" name="ingredientId" th:value="${item.getIngredient().getId()}"  />
+                                <input type="submit" value="Delete" />
+                            </form>
+                        </span>
+                    </td>
                 </tr>
             </tbody>
 
@@ -76,7 +83,8 @@
     </div>
 </div>
 
-
+<a class="btn btn-primary" role="button" th:href="'/recipe/addingredient/'+${recipe.id}" >Add Ingredient</a>
+<br/>
 
 <div th:replace="fragments :: cssjs"></div>
 
