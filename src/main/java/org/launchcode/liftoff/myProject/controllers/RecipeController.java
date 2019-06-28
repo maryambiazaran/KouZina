@@ -4,6 +4,7 @@ import org.launchcode.liftoff.myProject.models.*;
 import org.launchcode.liftoff.myProject.models.data.IngredientDao;
 import org.launchcode.liftoff.myProject.models.data.RecipeCategoryDao;
 import org.launchcode.liftoff.myProject.models.data.RecipeDao;
+import org.launchcode.liftoff.myProject.models.data.RecipeIngredientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,9 @@ public class RecipeController {
 
     @Autowired
     private IngredientDao ingredientDao;
+
+    @Autowired
+    private RecipeIngredientDao recipeIngredientDao;
 
 
     @RequestMapping("")
@@ -174,5 +178,16 @@ public class RecipeController {
         recipeDao.save(theRecipe);
         return "redirect:view/"+theRecipe.getId();
     }
+
+    @RequestMapping(value = "/delete", method=RequestMethod.POST )
+    public String deleteIngredientFromRecipe(Model model,
+                                             int recipeId,
+                                             int ingredientId) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        int theRecIngId = theRecipe.findRecipeIngredientByIngredient(ingredientId).getId();
+        recipeIngredientDao.delete(theRecIngId);
+        return "redirect:view/"+theRecipe.getId();
+    }
+
 
 }

@@ -29,7 +29,7 @@ public class Recipe {
 
     private int servingSize;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe")
     private List<RecipeIngredient> recipeIngredients;
 
     // =========== CONSTRUCTOR =============
@@ -99,6 +99,11 @@ public class Recipe {
             }
         }
         return null;
+    }
+
+    public void deleteIngredient(int ingredientId) {
+        RecipeIngredient recIng = findRecipeIngredientByIngredient(ingredientId);
+        this.getRecipeIngredients().remove(recIng);
     }
 
 // =========== EQUALS & HASHCODE =============

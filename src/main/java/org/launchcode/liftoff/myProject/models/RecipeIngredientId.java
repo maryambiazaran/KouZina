@@ -1,10 +1,5 @@
-package org.launchcode.liftoff.myProject.models.data;
+package org.launchcode.liftoff.myProject.models;
 
-import org.launchcode.liftoff.myProject.models.Ingredient;
-import org.launchcode.liftoff.myProject.models.Recipe;
-import org.launchcode.liftoff.myProject.models.RecipeIngredient;
-
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
