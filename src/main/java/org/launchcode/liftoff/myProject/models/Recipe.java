@@ -29,7 +29,7 @@ public class Recipe {
 
     private int servingSize;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.MERGE)
     private List<RecipeIngredient> recipeIngredients;
 
     // =========== CONSTRUCTOR =============

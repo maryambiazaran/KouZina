@@ -185,7 +185,11 @@ public class RecipeController {
                                              int ingredientId) {
         Recipe theRecipe = recipeDao.findOne(recipeId);
         int theRecIngId = theRecipe.findRecipeIngredientByIngredient(ingredientId).getId();
+        //theRecipe.deleteIngredient(ingredientId);
+        //recipeDao.save(theRecipe);
         recipeIngredientDao.delete(theRecIngId);
+
+       //
         return "redirect:view/"+theRecipe.getId();
     }
 
