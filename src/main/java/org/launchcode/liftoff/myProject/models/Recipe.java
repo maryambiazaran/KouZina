@@ -5,12 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 
 @Entity
@@ -95,6 +92,14 @@ public class Recipe {
         this.recipeIngredients = recipeIngredients;
     }
 
+    public RecipeIngredient findRecipeIngredientByIngredient(int ingredientId) {
+        for (RecipeIngredient recIng : this.getRecipeIngredients()) {
+            if (recIng.getIngredient().getId() == ingredientId) {
+                return recIng;
+            }
+        }
+        return null;
+    }
 
 // =========== EQUALS & HASHCODE =============
 

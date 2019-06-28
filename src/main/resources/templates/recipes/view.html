@@ -65,7 +65,9 @@
             <tbody >
                 <tr  th:each="item : ${recipe.recipeIngredients}">
                     <td  th:text="${item.id}"></td>
-                    <td  th:text="${item.getIngredient().getName()}"></td>
+                    <td>
+                        <a  th:text="${item.getIngredient().getName()}" th:href="'/recipe/edit/'+${recipeId}+'/'+${item.getIngredient().getId()}"></a>
+                    </td>
                     <td  th:text="${item.quantity}"></td>
                 </tr>
             </tbody>

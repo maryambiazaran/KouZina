@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.EntityManagerFactory;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -144,6 +145,34 @@ public class RecipeController {
         recipe.getRecipeIngredients().add(newrecipeIngredient);
         recipeDao.save(recipe);
         return "redirect:view/"+recipe.getId();
+    }
+
+    @RequestMapping(value="edit/{recipeId}/{ingredientId}")
+    public String displayRecipeIngredientEditForm(Model model,
+                                                  @PathVariable int recipeId,
+                                                  @PathVariable int ingredientId) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        Ingredient theIngredient = ingredientDao.findOne(ingredientId);
+        double q = theRecipe.findRecipeIngredientByIngredient(ingredientId).getQuantity();
+        AddRecipeIngredientForm form = new AddRecipeIngredientForm(theRecipe);
+        form.setRecipeId(recipeId);
+        form.setIngredientId(ingredientId);
+        form.setQuantity(q);
+        model.addAttribute("form", form);
+        model.addAttribute("ingredient", theIngredient);
+        return "recipes/editIngredient";
+
+    }
+
+    @RequestMapping(value="/editingredient", method=RequestMethod.POST)
+    public String processRecipeIngredientEditForm(Model model,
+                                                  @Valid AddRecipeIngredientForm form,
+                                                  Errors errors) {
+        Recipe theRecipe = recipeDao.findOne(form.getRecipeId());
+        RecipeIngredient recIng = theRecipe.findRecipeIngredientByIngredient(form.getIngredientId());
+        recIng.setQuantity(form.getQuantity());
+        recipeDao.save(theRecipe);
+        return "redirect:view/"+theRecipe.getId();
     }
 
 }

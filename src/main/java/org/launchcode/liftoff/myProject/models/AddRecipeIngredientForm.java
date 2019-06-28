@@ -18,6 +18,9 @@ public class AddRecipeIngredientForm {
 
     public AddRecipeIngredientForm(){}
 
+    public AddRecipeIngredientForm (Recipe recipe) {
+        this.recipe = recipe;
+    }
     public AddRecipeIngredientForm (Recipe recipe, Iterable<Ingredient> allIngredients) {
         this.recipe = recipe;
         this.allIngredients = allIngredients;
