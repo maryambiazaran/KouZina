@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+
+<nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${title}">Default Title</h1>
+
+
+
+<form method="post" action="/recipe/buildpreview" style="max-width:600px;" th:object="${recipe}">
+    <br/>
+    <span th:text="'Recipe: '+ *{name}" th:field="*{name}" th:value="*{name}"></span>
+    <span  th:field="*{servingSize}" th:text="|- Makes *{servingSize} servings|"></span>
+    <br/>    <br/>
+
+
+    <div class="form-group">
+        <label th:for="howMuch">How many servings are you planning to make?</label>
+        <input class="form-control" name="servingSize" th:value="${servingSize}" />
+    </div>
+
+    <input type="hidden" th:value="*{id}" name="recipeId" />
+
+    <input type="submit" value="Preview" />
+</form>
+<br/>
+<br/>
+<!-- ====================================== -->
+<p th:unless="${recipe.recipeIngredients} and ${recipe.recipeIngredients.size()}"> No Ingredients! :(</p>
+
+<div th:if="${servingSize} and ${recipe.recipeIngredients} and ${recipe.recipeIngredients.size()}">
+    <h4 th:text="|Ingredients to be consumed: (servings: ${servingSize})|" ></h4>
+    <div class="table-responsive-sm">
+        <table  class="table table-hover">
+            <thead>
+            <tr class="active" >
+                <th class="col-sm-2">Name</th>
+                <th class="col-sm-2">Quantity Needed</th>
+                <th class="col-sm-2">Quantity Available</th>
+
+            </tr>
+            </thead>
+            <tbody >
+            <tr  th:each="item : ${recipe.recipeIngredients}">
+                <td>
+                    <a  th:text="${item.getIngredient().getName()}" th:href="'/recipe/edit/'+${recipeId}+'/'+${item.getIngredient().getId()}"></a>
+                </td>
+                <td  th:text="${(servingSize/recipe.servingSize)*  item.quantity}"></td>
+                <td th:text="${item.getIngredient().getInventory()}"></td>
+
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <form method="post" action="/recipe/build" >
+        <input type="hidden" name="recipeId" th:value="${recipe.id}"  />
+        <input type="hidden" name="servingSize" th:value="${servingSize}"  />
+        <input type="submit" value="Do it!" />
+    </form>
+</div>
+
+
+
+<div th:replace="fragments :: cssjs"></div>
+
+
+</body>
+</html>

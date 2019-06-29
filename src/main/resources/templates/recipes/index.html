@@ -25,8 +25,9 @@
             <thead>
             <tr class="active" >
                 <th class="col-sm-3" >Name</th>
-                <th class="col-sm-3">Servings</th>
-                <th class="col-sm-3"># of Ingredients</th>
+                <th class="col-sm-2">Servings</th>
+                <th class="col-sm-2"># of Ingredients</th>
+                <th class="col-sm-1"></th>
             </tr>
             </thead>
             <tbody >
@@ -36,6 +37,9 @@
                 </td>
                 <td  th:text="${recipe.servingSize}"></td>
                 <td  th:text="${recipe.getRecipeIngredients().size()}"></td>
+                <td>
+                    <a class="btn btn-primary btn-sm" role="button" th:href="|/recipe/build/${recipe.id}|" >Make</a>
+                </td>
 
             </tr>
             </tbody>

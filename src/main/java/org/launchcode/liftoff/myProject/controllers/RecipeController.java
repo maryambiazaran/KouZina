@@ -1,10 +1,7 @@
 package org.launchcode.liftoff.myProject.controllers;
 
 import org.launchcode.liftoff.myProject.models.*;
-import org.launchcode.liftoff.myProject.models.data.IngredientDao;
-import org.launchcode.liftoff.myProject.models.data.RecipeCategoryDao;
-import org.launchcode.liftoff.myProject.models.data.RecipeDao;
-import org.launchcode.liftoff.myProject.models.data.RecipeIngredientDao;
+import org.launchcode.liftoff.myProject.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +30,9 @@ public class RecipeController {
 
     @Autowired
     private RecipeIngredientDao recipeIngredientDao;
+
+    @Autowired
+    private IngredientCategoryDao ingredientCategoryDao;
 
 
     @RequestMapping("")
@@ -191,5 +191,46 @@ public class RecipeController {
         return "redirect:view/"+theRecipe.getId();
     }
 
+    @RequestMapping(value = "build/{recipeId}")
+    public String viewBuildRecipeForm(Model model,
+                                      @PathVariable int recipeId) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        model.addAttribute("recipe", theRecipe);
+        model.addAttribute("title", "Let's get cooking!");
+
+        return "recipes/buildRecipe";
+    }
+
+    @RequestMapping(value = "buildpreview", method = RequestMethod.POST)
+    public String previewBuildRecipeForm(Model model,
+                                      int recipeId,
+                                      Double servingSize) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        model.addAttribute("recipe", theRecipe);
+        model.addAttribute("servingSize", servingSize);
+        model.addAttribute("title", "Let's get cooking!");
+
+        return "recipes/buildRecipe";
+    }
+
+    @RequestMapping(value = "build", method = RequestMethod.POST)
+    public String applyRecipe(Model model,
+                              int recipeId,
+                              double servingSize) {
+        Recipe theRecipe = recipeDao.findOne(recipeId);
+        //adjust inventories
+        for (RecipeIngredient recIng : theRecipe.getRecipeIngredients()) {
+            Ingredient ing = recIng.getIngredient();
+            double startQty = ing.getInventory();
+            double amount = (servingSize / theRecipe.getServingSize())*recIng.getQuantity();
+            ing.setInventory(startQty - amount);
+            ingredientDao.save(ing);
+        }
+        model.addAttribute("title", "Ingredients");
+        model.addAttribute("ingredients", ingredientDao.findAll());
+        model.addAttribute("categories", ingredientCategoryDao.findAll());
+        return "ingredients/index";
+    }
 
 }
+
